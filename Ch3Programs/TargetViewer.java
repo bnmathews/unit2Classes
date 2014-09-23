@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 public class TargetViewer
 {
     public static void main(String[] args)
+        throws InterruptedException
     {
         JFrame frame = new JFrame();
         
@@ -11,8 +12,15 @@ public class TargetViewer
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         TargetComponent component = new TargetComponent();
+        
         frame.add(component);
         
         frame.setVisible(true);
+        
+        while (true)
+        {
+            component.repaint();
+            Thread.sleep(200);
+        }
     }
 }
