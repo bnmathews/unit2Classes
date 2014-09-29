@@ -2,16 +2,9 @@ import java.util.Scanner;
 
 public class Rectangle
 {
-    private int x;
-    
     public Rectangle()
     {
-        // initialise instance variables
-        x = 0;
-    }
-    public int sampleMethod(int y)
-    {
-        return x+y;
+        
     }
     public static void main(String[] args)
     {
