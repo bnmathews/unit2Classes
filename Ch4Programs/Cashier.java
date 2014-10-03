@@ -11,18 +11,22 @@ public class Cashier
     {
         Scanner s = new Scanner(System.in);
         
-        System.out.print("How much is owed: ");
+        System.out.print("Enter amount due in pennies: ");
         Double due = s.nextDouble();
         
-        System.out.print("How much was paid: ");
+        System.out.print("Enter amount recieved in pennies: ");
         Double paid = s.nextDouble();
         
         Double change = paid - due;
         
-        int dollars = (int)(change / 1);
-        int quarters = (int)(change / .25);
-        int nickels = (int)(change / .05);
-        int dimes = (int)(change / .10);
+        int dollars = (int)(change / 100);
+        change = change % 100; //gives what is left over
+        int quarters = (int)(change / 25);
+        change = change % 25;
+        int nickels = (int)(change / 5);
+        change = change % 5;
+        int dimes = (int)(change / 1);
+        change = change % 5
         int pennies =  (int)(change / .01);
         
         System.out.println("Total Change: " + change);

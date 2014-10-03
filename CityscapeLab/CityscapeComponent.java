@@ -32,11 +32,15 @@ public class CityscapeComponent extends JComponent
         Random rand2 = new Random();
         Random rand3 = new Random();
         
-        Color firstcolor = new Color(rand.nextInt(255-1),rand2.nextInt(255-1),rand3.nextInt(255-1));
+        Color color = new Color(rand.nextInt(255-1),rand2.nextInt(255-1),rand3.nextInt(255-1));
        
-        Building b = new Building(50,42,100,200,firstcolor);
+        Building b = new Building(50,40,100,200,color,"revolving", "ac");
+        Building b2 = new Building(160,110,140,130,color,"single", "none");
+        SkyBox s = new SkyBox(160,110,140,130,color);
         
         b.draw(g2);
+        b2.draw(g2);
+        s.draw(g2);
     }
 
 }
