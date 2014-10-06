@@ -11,26 +11,36 @@ public class SkyBox extends JComponent
     private int yCoord;
     private int ln;
     private int wi;
-    private Color col; 
+    private Color skycolor; 
+    private boolean moon;
     
-    public SkyBox(int x, int y, int width, int length, Color color)
+    public SkyBox(int x, int y, int width, int length, Color mainsky, boolean moon)
     {
         xCoord = x;
         yCoord = y;
         ln = length;
         wi = width;
-        col = color;
+        skycolor = mainsky;
+        this.moon = moon;
     }
     
     public void draw(Graphics2D g2)
     {
-        Rectangle2D.Double sky = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-        Rectangle2D.Double sun = new Rectangle2D.Double(xCoord, yCoord, wi, ln);
-        
-        g2.setPaint(Color.BLUE);
-        g2.fill(sky);
-        g2.setPaint(Color.YELLOW);
-        g2.fill(sun);
+        Rectangle2D.Double sky1 = new Rectangle2D.Double(0, 0, wi, ln);
+        Ellipse2D.Double sun = new Ellipse2D.Double(xCoord, yCoord, 90, 90);
+       
+        g2.setPaint(skycolor);
+        g2.fill(sky1);
+        if (moon == false)
+        {
+            g2.setPaint(Color.YELLOW);
+            g2.fill(sun);
+        }
+        else
+        {
+            g2.setPaint(Color.WHITE);
+            g2.fill(sun);
+        }
     }
     
 }

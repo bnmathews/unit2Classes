@@ -11,16 +11,18 @@ public class Building
     private int ln;
     private int wi;
     private Color col; 
+    private Color wcol; 
     private String doortype;
     private String accessory;
     
-    public Building(int x, int y, int width, int length, Color color, String door, String acc)
+    public Building(int x, int y, int width, int length, Color color, Color wcol, String door, String acc)
     {
         xCoord = x;
         yCoord = y;
         ln = length;
         wi = width;
         col = color;
+        this.wcol = wcol;
         doortype = door;
         accessory = acc;
     }
@@ -53,10 +55,10 @@ public class Building
         Rectangle2D.Double window8 = new Rectangle2D.Double(xCoord + (wi * .38), yCoord + (ln * .52), wi / 4, ln / 4.5);
         Rectangle2D.Double window9 = new Rectangle2D.Double(xCoord + (wi * .70), yCoord + (ln * .52), wi / 4, ln / 4.5);
         
-        g2.setPaint(Color.BLACK);
+        g2.setPaint(col);
         g2.fill(body1);
         
-        g2.setPaint(Color.YELLOW);
+        g2.setPaint(wcol);
         g2.fill(window);
         g2.fill(window2);
         g2.fill(window3);

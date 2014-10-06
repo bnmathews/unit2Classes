@@ -13,6 +13,7 @@ public class CityscapeViewer
      *
      */
     public static void main(String[] args)
+        throws InterruptedException
     {
         // create and configure the frame (window) for the program
         JFrame frame = new JFrame();
@@ -28,6 +29,12 @@ public class CityscapeViewer
         // make the frame visible which will result in the paintComponent method being invoked on the
         //  component.
         frame.setVisible(true);
+
+        while (true)
+        {
+            //component.repaint();
+            //Thread.sleep(200);
+        }
     }
 
 }
