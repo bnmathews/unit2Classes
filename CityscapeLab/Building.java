@@ -12,10 +12,11 @@ public class Building
     private int wi;
     private Color col; 
     private Color wcol; 
+    private Color scol; 
     private String doortype;
     private String accessory;
     
-    public Building(int x, int y, int width, int length, Color color, Color wcol, String door, String acc)
+    public Building(int x, int y, int width, int length, Color color, Color wcol, Color scol, String door, String acc)
     {
         xCoord = x;
         yCoord = y;
@@ -23,6 +24,7 @@ public class Building
         wi = width;
         col = color;
         this.wcol = wcol;
+        this.scol = scol;
         doortype = door;
         accessory = acc;
     }
@@ -69,7 +71,7 @@ public class Building
         g2.fill(window8);
         g2.fill(window9);
         
-        g2.setPaint(Color.GRAY);
+        g2.setPaint(scol);
         g2.fill(sill);
         g2.fill(sill2);
         g2.fill(sill3);
@@ -87,7 +89,7 @@ public class Building
         
         if (accessory == "ac")
         {
-            g2.setPaint(Color.GRAY);
+            g2.setPaint(scol);
             g2.fill(airconditioner);
         }
     }
