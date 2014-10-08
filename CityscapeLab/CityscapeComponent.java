@@ -1,69 +1,205 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.util.Random;
 import javax.swing.JComponent;
 
 /**
  * Class that creates instances of the classes that comprise the cityscape and delegates drawing the
- *  cityscape to these object.
+ *  cityscape to these objects.
  * 
  * @author bnmathews
- * @version 18 July 2014
+ * @version 8 October 2014
  */
 public class CityscapeComponent extends JComponent
 {
+    private int step = 0;
+    private int step2 = 0;
+    private int step3 = 0;
+    private int step4 = 0;
+    private int steprev = 0;
+    private int step2rev = 0;
+    
     /**
-     * An example of a method - replace this comment with your own
-     *    that describes the operation of the method
-     *
-     * @pre        preconditions for the method
-     *            (what the method assumes about the method's parameters and class's state)
-     * @post    postconditions for the method
-     *            (what the method guarantees upon completion)
-     * @param    y    description of parameter y
-     * @return    description of the return value
+     * Initializes all the objects to be drawn, as well as actually drawing them
      */
     public void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
         
-        Random rand = new Random();
-        Random rand2 = new Random();
+        //Step's calculations, starts with program, counts to and then reverses from 255
+        if (steprev == 0)
+            {
+                if (step4 < 1)
+                {
+                    step = step + 1; // usually 4
+                    step2 = 0;
+                }
+            } 
+            
+        if (steprev == 1)
+            {
+                step = step - 1;
+            }
+            
+        if (step == 0)
+            {
+                steprev = 0;
+            }
+            
+        if (step == 225) //Step starts reversing here
+            {
+                steprev = 1;
+                
+            }
+            
+        //Step 2's calculations, only begins if step is not running    
+        if (step2rev == 0)
+            {
+                if (steprev == 0 && step == 0)
+                {
+                    step2 = step2 + 1;
+                }
+            } 
+            
+        if (step2rev == 1)
+            {
+                step2 = step2 - 1;
+            }
+            
+        if (step2 == 0)
+            {
+                step2rev = 0;
+            }
+            
+        if (step2 == 225) //Step2 starts reversing here
+            {
+                step2rev = 1;
+                
+            }
+            
+        //Step 3's calculations, only begins if step 4 is less than 1    
+        if (step3 < 900)
+            if (step4 < 1)
+            {
+                {
+                    step3 = step3 + 2;
+                } 
+            }
+            
+        if (step3 == 900)
+        {
+                step3 = 0;
+                step4 = step4 + 1;
+        }
         
-        int buildingmult = rand.nextInt(30+10);
-        int windowrange = rand.nextInt(5+1);
+        //Step 4's calculations, only begins if step 3 hits 900
+        if (step4 >= 1 && step4 < 900)
+        {
+            step4 = step4 + 2;
+            step = 0;
+        }
+        else if (step4 == 901)
+        {
+            step4 = 0;
+        }
         
-        Color buildingcolor = new Color(2 * buildingmult,2 * buildingmult,2 * buildingmult);
-        Color skycolor = new Color(rand.nextInt(30-1),0,rand2.nextInt(200-1));
+        //Used to change the building's colors depending on the time of day
+        int fbuildmult = 15 + (step / 20);
+        int bbuildmult = 10 + (step / 20);
         
+        //The front and back row building colors
+        Color fbuildingcolor = new Color(2 * fbuildmult,2 * fbuildmult,2 * fbuildmult);
+        Color bbuildingcolor = new Color(bbuildmult,bbuildmult,bbuildmult);
+        
+        //Color of the sky
+        Color skycolor = new Color(step / 4,0,step);
+        
+        //The colors of a building's windowsill - just a bit brighter than the building itself
+        Color fsillcolor = new Color(80 + fbuildmult,80 + fbuildmult,80 + fbuildmult);
+        Color bsillcolor = new Color(70 + bbuildmult,70 + bbuildmult,70 + bbuildmult);
+        
+        //Roughly gets the brightness of the sky at the current frame
         int skybrightness = skycolor.getGreen() + skycolor.getRed() + skycolor.getBlue();
-        //This gets the brighness of the sky, below 100 would be considered night
         
-        System.out.println(skybrightness);
-        
-        int skydarkness = 150 - (skybrightness);
-        
-        Color windowcolor = new Color((skydarkness*2),(skydarkness*2),0);
-        
-        SkyBox s;
-        
-        if (skybrightness < 100)
+        //Very roughly gets how much color ISN'T in the sky
+        int skydarkness = 255 - (skybrightness);
+
+        if (skydarkness > 255)
         {
-            s = new SkyBox(160,110,getWidth(),getHeight(),skycolor,true);
-        }
-        else
-        {
-            s = new SkyBox(160,110,getWidth(),getHeight(),skycolor,false);
+            skydarkness = 255;
         }
         
-        Building b = new Building(50,340,100,200,buildingcolor,windowcolor,"revolving", "ac");
-        Building b2 = new Building(160,410,140,130,buildingcolor,windowcolor,"single", "none");
-        Building b3 = new Building(160,410,140,130,buildingcolor,windowcolor,"single", "none");
+        if (skybrightness > 255)
+        {
+            skybrightness = 255;
+        }
         
+        //Determines how bright or dark to make the windows
+        int windowmult = 2 * skydarkness;
+        
+        if (windowmult > 255)
+        {
+            windowmult = 255;
+        }
+        
+        if (windowmult < 140)
+        {
+            windowmult = 140;
+        }
+        
+        //Color for the windows, uses windowmult in the R and G areas to give a yellow color
+        Color windowcolor = new Color(windowmult,windowmult,0);
+        
+        //Color of the street
+        Color streetcolor = new Color(40 + (step / 10),40 + (step / 10),40 + (step / 10));
+        
+        //The sky - the sun uses step3 and step for its coordinates, while the moon uses step4 and step2
+        //The actual background scales with the window (even though it doesn't really need to!)
+        SkyBox s = new SkyBox(step3,300-(step),getWidth(),getHeight(),skycolor,step4,300-(step2));
+        
+        //The front row of buildings
+        Building b = new Building(50,340,100,200,fbuildingcolor,windowcolor,fsillcolor,"revolving", "ac");
+        Building b2 = new Building(-60,320,100,220,fbuildingcolor,windowcolor,fsillcolor,"revolving", "ac");
+        Building b3 = new Building(160,410,140,130,fbuildingcolor,windowcolor,fsillcolor,"single", "none");
+        Building b4 = new Building(310,400,140,140,fbuildingcolor,windowcolor,fsillcolor,"single", "ac");
+        Building b5 = new Building(460,300,120,240,fbuildingcolor,windowcolor,fsillcolor,"single", "ac");
+        Building b6 = new Building(590,330,120,210,fbuildingcolor,windowcolor,fsillcolor,"revolving", "none");
+        Building b7 = new Building(720,370,140,170,fbuildingcolor,windowcolor,fsillcolor,"single", "none");
+        
+        //The back row of buildings
+        Building b8 = new Building(10,270,100,270,bbuildingcolor,windowcolor,bsillcolor,"revolving", "none");
+        Building b9 = new Building(130,260,100,280,bbuildingcolor,windowcolor,bsillcolor,"revolving", "ac");
+        Building b10 = new Building(240,330,140,210,bbuildingcolor,windowcolor,bsillcolor,"revolving", "ac");
+        Building b11 = new Building(390,265,110,275,bbuildingcolor,windowcolor,bsillcolor,"single", "antenna");
+        Building b12 = new Building(510,230,120,310,bbuildingcolor,windowcolor,bsillcolor,"revolving", "none");
+        Building b13 = new Building(640,300,140,240,bbuildingcolor,windowcolor,bsillcolor,"revolving", "ac");
+        
+        //The street!
+        Street str = new Street(0,540,getWidth(),30,streetcolor);
+        
+        //Draws the sky
         s.draw(g2);
+        
+        //Draws the back row of buildings
+        b8.draw(g2);
+        b9.draw(g2);
+        b10.draw(g2);
+        b11.draw(g2);
+        b12.draw(g2);
+        b13.draw(g2);
+        
+        //Draws the front row of buildings
         b.draw(g2);
         b2.draw(g2);
+        b3.draw(g2);
+        b4.draw(g2);
+        b5.draw(g2);
+        b6.draw(g2);
+        b7.draw(g2);
+        
+        //Draws street
+        str.draw(g2);
+       
     }
 
 }

@@ -3,8 +3,8 @@ import javax.swing.JFrame;
 /**
  * Class that contains the main method for the program and creates the frame containing the component.
  * 
- * @author @gcschmit
- * @version 18 July 2014
+ * @author @bnmathews
+ * @version 8 October 2014
  */
 public class CityscapeViewer
 {
@@ -29,11 +29,12 @@ public class CityscapeViewer
         // make the frame visible which will result in the paintComponent method being invoked on the
         //  component.
         frame.setVisible(true);
-
+        
+        //Allows for smoothly animated movement
         while (true)
         {
-            //component.repaint();
-            //Thread.sleep(200);
+            component.repaint();
+            Thread.sleep(25);
         }
     }
 
