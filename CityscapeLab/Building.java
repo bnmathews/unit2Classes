@@ -24,18 +24,13 @@ public class Building
     private Color col; 
     /** The color of the building's windows */
     private Color wcol; 
-<<<<<<< HEAD
     /** The color of the buildings windowsills */
     private Color scol; 
     /** The type of door the building uses ("revolving","single") */
-=======
-    private Color scol; 
->>>>>>> origin/master
     private String doortype;
     /** The type of accessory the building displays ("antenna","ac","none") */
     private String accessory;
     
-<<<<<<< HEAD
     /**
      * Constructor for Building that specifies:
      * the x position,
@@ -47,8 +42,6 @@ public class Building
      * the type of door the building uses,
      * and the type of accessory the building displays 
      */
-=======
->>>>>>> origin/master
     public Building(int x, int y, int width, int length, Color color, Color wcol, Color scol, String door, String acc)
     {
         xCoord = x;
@@ -118,10 +111,7 @@ public class Building
         g2.fill(window8);
         g2.fill(window9);
         
-<<<<<<< HEAD
         //Draws and fills the windowsills and the roof with the windowsill color
-=======
->>>>>>> origin/master
         g2.setPaint(scol);
         g2.fill(sill);
         g2.fill(sill2);

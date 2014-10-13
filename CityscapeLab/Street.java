@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 
-<<<<<<< HEAD
 /**
  * Building class draws the cityscape's street
  * 
@@ -29,16 +28,6 @@ public class Street
      * the width and length,
      * and the street's color
      */
-=======
-public class Street
-{
-    private int xCoord;
-    private int yCoord;
-    private int ln;
-    private int wi;
-    private Color col; 
-    
->>>>>>> origin/master
     public Street(int x, int y, int width, int length, Color color)
     {
         xCoord = x;
@@ -48,7 +37,6 @@ public class Street
         col = color;
     }
     
-<<<<<<< HEAD
     /**
      * Draws the Street
      */
@@ -58,12 +46,6 @@ public class Street
         Rectangle2D.Double street = new Rectangle2D.Double(xCoord, yCoord, wi, ln);
         
         //Draws and fills the street with the street color
-=======
-    public void draw(Graphics2D g2)
-    {
-        Rectangle2D.Double street = new Rectangle2D.Double(xCoord, yCoord, wi, ln);
-        
->>>>>>> origin/master
         g2.setPaint(col);
         g2.fill(street);
         

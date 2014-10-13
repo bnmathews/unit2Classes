@@ -34,11 +34,7 @@ public class CityscapeViewer
         while (true)
         {
             component.repaint();
-<<<<<<< HEAD
             Thread.sleep(25);
-=======
-            Thread.sleep(500);
->>>>>>> origin/master
         }
     }
 
